@@ -3,14 +3,10 @@ package com.blackducksoftware.integration.fortify;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -79,37 +75,42 @@ public class BlackDuckIssueParser implements AnalysisFileParser, AnalysisSingleF
 
         Scan blackDuckScan = new Scan();
 
-        Date scanDate = getAnalysisDate(inputStream);
-        BlackDuckLogger.logInfo("Date: " + scanDate);
-        blackDuckScan.setScanDate(scanDate);
+        try {
+            // TODO: This date is generated anew everytime.
+            Date scanDate = getAnalysisDate(inputStream);
+            BlackDuckLogger.logInfo("Date for scan object: " + scanDate);
+            blackDuckScan.setScanDate(scanDate);
 
-        blackDuckScan.setLabel(BlackDuckConstants.SCAN_LABEL);
-        blackDuckScan.setVersionLabel(BlackDuckConstants.SCAN_VERSION);
-        blackDuckScan.setUuid(generateUniqueKey());
-        blackDuckScan.setELOC(BlackDuckConstants.SCAN_ELOC);
-        blackDuckScan.setCertification(ScanCertification.NOT_PRESENT);
-        BlackDuckLogger.logInfo("Entry name: " + entryName);
-        blackDuckScan.setEntryName(entryName);
-        blackDuckScan.setProjectLabel("ProjectLabelGoesHere"); // TODO: Figure out project name
-        blackDuckScan.setVersionLabel("VersionLabelGoesHere"); // TODO: Figure out project version
-        blackDuckScan.setFortifyAnnotations(BlackDuckConstants.SCAN_FORTIFY_ANNOTATIONS);
+            // This is a unique ID *per* file.
+            blackDuckScan.setUuid(generateUniqueKey(inputStream));
 
+            blackDuckScan.setLabel(BlackDuckConstants.SCAN_LABEL);
+            blackDuckScan.setVersionLabel(BlackDuckConstants.SCAN_VERSION);
+            blackDuckScan.setELOC(BlackDuckConstants.SCAN_ELOC);
+            blackDuckScan.setCertification(ScanCertification.NOT_PRESENT);
+            BlackDuckLogger.logInfo("Entry name: " + entryName);
+            blackDuckScan.setEntryName(entryName);
+            blackDuckScan.setProjectLabel("ProjectLabelGoesHere"); // TODO: Figure out project name
+            blackDuckScan.setVersionLabel("VersionLabelGoesHere"); // TODO: Figure out project version
+            blackDuckScan.setFortifyAnnotations(BlackDuckConstants.SCAN_FORTIFY_ANNOTATIONS);
+        } catch (Exception e)
+        {
+            throw new IOException("Unable to complete scan", e);
+        }
         return blackDuckScan;
     }
 
     /**
+     * Generates a unique SCAN ID per file. Uses the md5 for the supplied inputstream.
+     * 
+     * @param inputStream
      * @return
+     * @throws Exception
      */
-    private String generateUniqueKey() {
-        String uniqueKey = UUID.randomUUID().toString();
-
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy_HH:mm:ss");
-        Date today = Calendar.getInstance().getTime();
-        String reportDate = df.format(today);
-
-        uniqueKey = uniqueKey + reportDate;
-
-        return uniqueKey;
+    private String generateUniqueKey(InputStream inputStream) throws Exception {
+        String md5sumForStream = BlackDuckCSVParser.getMD5ForStream(inputStream);
+        BlackDuckLogger.logInfo("Generating unique SCAN ID for file: " + md5sumForStream);
+        return md5sumForStream;
     }
 
     /**

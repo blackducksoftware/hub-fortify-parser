@@ -3,6 +3,7 @@ package com.blackducksoftware.integration.fortify;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -22,22 +23,68 @@ public class BlackDuckCSVParserTest
 
     private static File simpleCsvFile;
 
+    public static File junkFile;
+
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         simpleCsvFile = new File(SIMPLE_CSV);
         if (!simpleCsvFile.exists()) {
             Assert.fail("Cannot find simple csv file");
         }
+
+        junkFile = new File(JUNK_TXT);
+        if (!junkFile.exists()) {
+            Assert.fail("Cannot find junk file");
+        }
+    }
+
+    /**
+     * Tests the uniqueness of the md5 on two streams.
+     * Reads in two files and checks the md5, then overwrites the second file with the contents of the first
+     * Expecting the same md5
+     */
+    @Test
+    public void testMD5GenerationForFile()
+    {
+        InputStream firstFileStream = null;
+        InputStream secondFileStream = null;
+        try {
+            firstFileStream = new FileInputStream(simpleCsvFile);
+            String firstFilemd5string = BlackDuckCSVParser.getMD5ForStream(firstFileStream);
+            Assert.assertNotNull(firstFilemd5string);
+
+            secondFileStream = new FileInputStream(junkFile);
+            String secondFilemd5string = BlackDuckCSVParser.getMD5ForStream(secondFileStream);
+            Assert.assertNotNull(secondFilemd5string);
+
+            Assert.assertNotEquals(firstFilemd5string, secondFilemd5string);
+
+            // Overwrite contents
+            secondFileStream = new FileInputStream(simpleCsvFile);
+            secondFilemd5string = BlackDuckCSVParser.getMD5ForStream(secondFileStream);
+
+            Assert.assertEquals(firstFilemd5string, secondFilemd5string);
+
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        } finally
+        {
+            try {
+                firstFileStream.close();
+            } catch (IOException e) {
+
+            }
+            try {
+                secondFileStream.close();
+            } catch (IOException e) {
+
+            }
+        }
     }
 
     @Test
     public void testFileIntegrity()
     {
-        File junkFile = new File(JUNK_TXT);
-        if (!junkFile.exists()) {
-            Assert.fail("Junk file DNE");
-        }
-
         try {
             InputStream junkStream = new FileInputStream(junkFile);
             try {

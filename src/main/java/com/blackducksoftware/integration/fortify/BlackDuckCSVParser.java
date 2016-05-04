@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import org.springframework.util.DigestUtils;
+
 import com.univocity.parsers.common.TextParsingException;
 import com.univocity.parsers.common.processor.BeanListProcessor;
 import com.univocity.parsers.csv.CsvParser;
@@ -72,6 +74,31 @@ public class BlackDuckCSVParser {
             BlackDuckLogger.logError("CSV parsing error: " + tpe.getCause().getMessage());
         }
 
+    }
+
+    /**
+     * Gets an MD5 for the file. Deliberately using Spring's built-in library
+     * over Apache for reduced classpath complexity.
+     * 
+     * @param is
+     * @return
+     * @throws Exception
+     */
+    public static String getMD5ForStream(InputStream is) throws Exception
+    {
+        String sha1code;
+        try
+        {
+            sha1code = DigestUtils.md5DigestAsHex(is);
+            if (sha1code == null) {
+                throw new Exception("DigestUtils was unable to generate MD5");
+            }
+        } catch (Exception e)
+        {
+            throw new Exception("Unable to generate MD5 for stream!", e);
+        }
+
+        return sha1code;
     }
 
     /**
