@@ -71,12 +71,10 @@ public class BlackDuckIssueParser implements AnalysisFileParser, AnalysisSingleF
      */
     @Override
     public Scan parseAnalysisInformation(InputStream inputStream, String entryName) throws IOException {
-        BlackDuckLogger.logInfo("Initializing new scan...");
-
+        BlackDuckLogger.logInfo("Initializing new scan for Black Duck");
         Scan blackDuckScan = new Scan();
 
         try {
-            // TODO: This date is generated anew everytime.
             Date scanDate = getAnalysisDate(inputStream);
             BlackDuckLogger.logInfo("Date for scan object: " + scanDate);
             blackDuckScan.setScanDate(scanDate);

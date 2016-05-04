@@ -34,9 +34,15 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.hynnet</groupId>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>4.2.1.RELEASE</version>
+			<version>3.2.10.RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.6</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -44,6 +50,7 @@
 			<artifactId>univocity-parsers</artifactId>
 			<version>1.3.2</version>
 		</dependency>
+
 
 
 	</dependencies>
