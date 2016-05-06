@@ -3,8 +3,8 @@ package com.blackducksoftware.integration.fortify;
 import com.univocity.parsers.annotations.Parsed;
 
 /**
- * Bean mapped to output of the Hub csv report
- * If the columsn change, the mappings here will need to be updated.
+ * Bean mapped to output of the Hub CSV report
+ * If the columns change, the mappings here will need to be updated.
  * 
  * @author akamen
  * 
@@ -74,14 +74,26 @@ public class BlackDuckIssue {
     @Parsed(field = "URL")
     private String URL;
 
+    private String issueId;
+
+    public void setId(String name) {
+        issueId = cleanName(name) + ":" + vulnerabilityId;
+    }
+
     /**
-     * Returns the unique ID of this particular issue.
-     * Format is project:vulnerabilityid
+     * * Returns the unique ID of this particular issue.
+     * Using an internal id plus the supplied name via the setId()
+     * 
+     * Format will be supplied name during setid + ":" + vulnerability ID
      * 
      * @return
      */
-    public String getId() {
-        return projectId + ":" + versionId + ":" + vulnerabilityId;
+    public String getId()
+    {
+        if (issueId == null) {
+            setId("");
+        }
+        return issueId;
     }
 
     public String getProjectId() {
@@ -251,4 +263,14 @@ public class BlackDuckIssue {
     public void setURL(String URL) {
         this.URL = URL;
     }
+
+    /**
+     * @param name2
+     * @return
+     */
+    private String cleanName(String name) {
+        name = name.replace(" ", "");
+        return name;
+    }
+
 }

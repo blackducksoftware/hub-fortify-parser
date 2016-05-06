@@ -133,7 +133,7 @@ public class BlackDuckCSVParserTest
             Assert.assertEquals("http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2006-0300", firstIssue.getURL());
 
             // Test for unique id
-            Assert.assertEquals("8c60f9fd-7885-48e5-9890-05e2fd8149e0:2d754b4e-c2fc-42f7-876a-f7eefd9b6d8b:CVE-2006-0300", firstIssue.getId());
+            Assert.assertEquals(":CVE-2006-0300", firstIssue.getId());
 
         } catch (FileNotFoundException e) {
             Assert.fail(e.getMessage());

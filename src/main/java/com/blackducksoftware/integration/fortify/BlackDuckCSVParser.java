@@ -32,6 +32,8 @@ public class BlackDuckCSVParser {
 
     private BufferedReader br;
 
+    private static String sha1Code;
+
     public BlackDuckCSVParser(InputStream is) throws Exception
     {
         init(is);
@@ -78,11 +80,10 @@ public class BlackDuckCSVParser {
 
     public static String getMD5ForStream(InputStream is) throws Exception
     {
-        String sha1code;
         try
         {
-            sha1code = DigestUtils.md5Hex(is);
-            if (sha1code == null) {
+            sha1Code = DigestUtils.md5Hex(is);
+            if (sha1Code == null) {
                 throw new Exception("DigestUtils was unable to generate MD5");
             }
         } catch (Exception e)
@@ -90,7 +91,7 @@ public class BlackDuckCSVParser {
             throw new Exception("Unable to generate MD5 for stream!", e);
         }
 
-        return sha1code;
+        return sha1Code;
     }
 
     /**

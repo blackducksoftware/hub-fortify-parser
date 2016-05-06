@@ -191,9 +191,22 @@ public class BlackDuckIssueParser implements AnalysisFileParser, AnalysisSingleF
         }
     }
 
+    /**
+     * Processes the individual Black Duck issues and converts them to internal Fortify issues.
+     * In order to make each issue unique to the project, the name of the file the will be used
+     * to generate a portion of the ID.
+     * 
+     * @param blackDuckIssue
+     * @param issueHandler
+     * @param latestScan
+     * @param scan
+     */
     private void processIssue(BlackDuckIssue blackDuckIssue, IssueHandler issueHandler, boolean latestScan, Scan scan) {
+        // Important: Provide the entry name of the file to establish project uniqueness for IDs
+        blackDuckIssue.setId(scan.getEntryName());
 
         InternalIssueParseHandler internalIssueHandler = (InternalIssueParseHandler) issueHandler;
+        BlackDuckLogger.logInfo("Creating new issue with ID: " + blackDuckIssue.getId());
         final UpdateStatus updateStatus = internalIssueHandler.startIssue(blackDuckIssue.getId());
 
         internalIssueHandler.setManual(false); // if BlackDuck allows customers to enter information about
@@ -202,10 +215,9 @@ public class BlackDuckIssueParser implements AnalysisFileParser, AnalysisSingleF
 
         internalIssueHandler.setAnalyzerName(IssueUtil.canonicalizeAnalyzerName(PENTEST_ANALYZER_TYPE));
 
-        // We need to discuss that part. Lets talk about it on a meeting.
-        final String categoryType = BlackDuckConstants.ISSUE_CATEGORY;
+        // Uknown what to do for category subtype
         final String categorySubType = "";
-        internalIssueHandler.setCategoryTypeAndSubType(categoryType, categorySubType);
+        internalIssueHandler.setCategoryTypeAndSubType(BlackDuckConstants.ISSUE_CATEGORY, categorySubType);
 
         // This is not great, but there is not other place version in SSC data model.
         internalIssueHandler.setFileName(blackDuckIssue.getProjectName() + ":" + blackDuckIssue.getVersion());
@@ -250,8 +262,8 @@ public class BlackDuckIssueParser implements AnalysisFileParser, AnalysisSingleF
         // Let's talk about it on a meeting.
         issueHandler.setCategorySourceType(CategorySourceTypeName.NATIVE.name());
 
-        // This is URL where vulnerability was found (e.g SQL injection on some web page. Lets leave it empty here).
-        issueHandler.setURL("");
+        // Source of CVE
+        issueHandler.setURL(blackDuckIssue.getURL());
 
         issueHandler.endIssue(blackDuckIssue.getId());
         scan.putInstanceID(updateStatus, blackDuckIssue.getId());
