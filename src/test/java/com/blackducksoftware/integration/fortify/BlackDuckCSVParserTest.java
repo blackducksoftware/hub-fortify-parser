@@ -1,3 +1,25 @@
+/**
+ * Copyright (C) 2016 Black Duck Software, Inc.
+ * http://www.blackducksoftware.com/
+ * 
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.
+ * 
+ * The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package com.blackducksoftware.integration.fortify;
 
 import java.io.File;
@@ -21,7 +43,11 @@ public class BlackDuckCSVParserTest
 
     private static final String JUNK_TXT = "src/test/resources/junkfile.txt";
 
+    private static final String COMPLEX_CSV = "src/test/resources/complexcsv.csv";
+
     private static File simpleCsvFile;
+
+    private static File complexCsvFile;
 
     public static File junkFile;
 
@@ -30,6 +56,11 @@ public class BlackDuckCSVParserTest
         simpleCsvFile = new File(SIMPLE_CSV);
         if (!simpleCsvFile.exists()) {
             Assert.fail("Cannot find simple csv file");
+        }
+
+        complexCsvFile = new File(COMPLEX_CSV);
+        if (!complexCsvFile.exists()) {
+            Assert.fail("Cannot find complex csv file");
         }
 
         junkFile = new File(JUNK_TXT);
@@ -134,6 +165,30 @@ public class BlackDuckCSVParserTest
 
             // Test for unique id
             Assert.assertEquals(":CVE-2006-0300", firstIssue.getId());
+
+        } catch (FileNotFoundException e) {
+            Assert.fail(e.getMessage());
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+
+    /**
+     * Tests a longer csv with every cell filled out.
+     * 
+     */
+    @Test
+    public void testComplexCSVFile()
+    {
+        BlackDuckCSVParser blackDuckParser;
+        try {
+            InputStream targetStream = new FileInputStream(complexCsvFile);
+            blackDuckParser = new BlackDuckCSVParser(targetStream);
+
+            List<BlackDuckIssue> issues = blackDuckParser.getRows();
+
+            // Test for correct rows
+            Assert.assertEquals(33, issues.size());
 
         } catch (FileNotFoundException e) {
             Assert.fail(e.getMessage());

@@ -4,7 +4,7 @@
 
 	<groupId>com.blackducksoftware.integration</groupId>
 	<artifactId>bds-fortify-integration</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>fortify</name>
