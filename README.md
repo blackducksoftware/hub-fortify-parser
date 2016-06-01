@@ -1,6 +1,6 @@
 # Hub Fortify integration
 
-Documentation: http://blackducksoftware.github.io/hub-fortify/
+Documentation: https://github.com/blackducksoftware/hub-fortify/wiki
 
 # License
 
