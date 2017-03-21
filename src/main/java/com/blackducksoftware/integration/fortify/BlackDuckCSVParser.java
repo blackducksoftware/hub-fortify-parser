@@ -91,8 +91,9 @@ public class BlackDuckCSVParser {
             throw new Exception("Unable to create buffered reader from stream!");
         } catch (TextParsingException tpe)
         {
-
-            BlackDuckLogger.logError("CSV parsing error: " + tpe.getCause().getMessage());
+            final String message = "CSV parsing error: " + tpe.getCause().getMessage();
+            BlackDuckLogger.logError(message);
+            throw new Exception(message);
         }
 
     }
