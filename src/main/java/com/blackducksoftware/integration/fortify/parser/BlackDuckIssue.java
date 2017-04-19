@@ -1,18 +1,18 @@
 /**
  * Copyright (C) 2016 Black Duck Software, Inc.
  * http://www.blackducksoftware.com/
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements. See the NOTICE file
  * distributed with this work for additional information
  * regarding copyright ownership.
- * 
+ *
  * The ASF licenses this file
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -20,18 +20,26 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.blackducksoftware.integration.fortify;
+package com.blackducksoftware.integration.fortify.parser;
 
 import com.univocity.parsers.annotations.Parsed;
+
+import java.math.BigDecimal;
+import java.util.UUID;
 
 /**
  * Bean mapped to output of the Hub CSV report
  * If the columns change, the mappings here will need to be updated.
- * 
+ *
  * @author akamen
- * 
+ *
  */
 public class BlackDuckIssue {
+
+    /**
+     * Unique natural issue identifier.
+     */
+    private String issueId;
 
     @Parsed(field = "Project id")
     private String projectId;
@@ -70,13 +78,13 @@ public class BlackDuckIssue {
     private String updatedOn;
 
     @Parsed(field = "Base Score")
-    private float baseScore;
+    private BigDecimal baseScore;
 
     @Parsed(field = "Exploitability")
-    private float exploitability;
+    private BigDecimal exploitability;
 
     @Parsed(field = "Impact")
-    private float impact;
+    private BigDecimal impact;
 
     @Parsed(field = "Vulnerability source")
     private String vulnerabilitySource;
@@ -96,24 +104,17 @@ public class BlackDuckIssue {
     @Parsed(field = "URL")
     private String URL;
 
-    private String issueId;
-
-    public void setId(String name) {
-        issueId = cleanName(name) + ":" + vulnerabilityId;
-    }
-
     /**
-     * * Returns the unique ID of this particular issue.
+     * Returns the unique ID of this particular issue.
      * Using an internal id plus the supplied name via the setId()
-     * 
      * Format will be supplied name during setid + ":" + vulnerability ID
-     * 
-     * @return
+     *
+     * @return unique issue ID
      */
-    public String getId()
-    {
+    public String getId() {
         if (issueId == null) {
-            setId("");
+            String uuidData = String.format("%s:%s", BlackDuckUtils.cleanName(projectName), vulnerabilityId);
+            issueId = UUID.nameUUIDFromBytes(uuidData.getBytes()).toString();
         }
         return issueId;
     }
@@ -214,27 +215,27 @@ public class BlackDuckIssue {
         this.updatedOn = updatedOn;
     }
 
-    public float getBaseScore() {
+    public BigDecimal getBaseScore() {
         return baseScore;
     }
 
-    public void setBaseScore(float baseScore) {
+    public void setBaseScore(BigDecimal baseScore) {
         this.baseScore = baseScore;
     }
 
-    public float getExploitability() {
+    public BigDecimal getExploitability() {
         return exploitability;
     }
 
-    public void setExploitability(float exploitability) {
+    public void setExploitability(BigDecimal exploitability) {
         this.exploitability = exploitability;
     }
 
-    public float getImpact() {
+    public BigDecimal getImpact() {
         return impact;
     }
 
-    public void setImpact(float impact) {
+    public void setImpact(BigDecimal impact) {
         this.impact = impact;
     }
 
@@ -285,14 +286,4 @@ public class BlackDuckIssue {
     public void setURL(String URL) {
         this.URL = URL;
     }
-
-    /**
-     * @param name2
-     * @return
-     */
-    private String cleanName(String name) {
-        name = name.replace(" ", "");
-        return name;
-    }
-
 }

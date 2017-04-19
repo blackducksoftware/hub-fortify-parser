@@ -1,0 +1,81 @@
+[
+  [
+    {
+      "type": "template",
+      "title": "Overview",
+      "key": "customAttributes.description",
+      "templateId": "COLLAPSE",
+      "dataType": "string"
+    },
+    {
+      "type": "fieldset",
+      "htmlClass": "container-spacer-bottom",
+      "items": [
+        {
+          "type": "template",
+          "title": "Vulnerability ID",
+          "key": "customAttributes.vulnerabilityId",
+          "templateId": "SIMPLE",
+          "dataType": "string"
+        },
+        {
+          "type": "template",
+          "title": "Vulnerability Source",
+          "key": "customAttributes.vulnerabilitySource",
+          "templateId": "SIMPLE",
+          "dataType": "string"
+        },
+        {
+          "type": "template",
+          "title": "Published on",
+          "key": "customAttributes.publishedOn",
+          "templateId": "SIMPLE",
+          "dataType": "date"
+        },
+        {
+          "type": "template",
+          "title": "Last Updatded on",
+          "key": "customAttributes.updatedOn",
+          "templateId": "SIMPLE",
+          "dataType": "date"
+        },
+        {
+          "type": "template",
+          "key": "primaryTag",
+          "templateId": "PRIMARYTAG",
+          "dataType": "string"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "type": "template",
+      "templateId": "TITLEBOX",
+      "title": "Details",
+      "items": [
+        {
+          "type": "template",
+          "title": "Hub Project Name",
+          "key": "customAttributes.projectName",
+          "templateId": "SIMPLE",
+          "dataType": "string"
+        },
+        {
+          "type": "template",
+          "title": "Hub Project Id",
+          "key": "customAttributes.projectId",
+          "templateId": "SIMPLE",
+          "dataType": "integer"
+        },
+        {
+          "type": "template",
+          "title": "Level of Exploitability",
+          "key": "customAttributes.exploitability",
+          "templateId": "SIMPLE",
+          "dataType": "integer"
+        }
+      ]
+    }
+  ]
+]

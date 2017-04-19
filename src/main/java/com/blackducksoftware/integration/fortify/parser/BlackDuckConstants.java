@@ -20,30 +20,33 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.blackducksoftware.integration.fortify;
+package com.blackducksoftware.integration.fortify.parser;
 
 /**
- * This is just a wrapper around the System out for now.
- * TODO: Need to use the native Fortify logger.
- * 
+ * Set of useful constants for black duck parser.
  * @author akamen
- * 
  */
-public class BlackDuckLogger {
+public class BlackDuckConstants {
 
-    public static void logInfo(String msg)
-    {
-        System.out.println(msg);
-    }
+    public static final String PENTEST_ANALYZER_TYPE = "pentest";
 
-    public static void logError(String msg)
-    {
-        System.err.println(msg);
-    }
+    public static final String SCAN_LABEL = "Black Duck Hub Vulnerability Import";
 
-    public static void logError(String msg, Exception e)
-    {
-        System.err.println(msg + ":" + e.getMessage());
-    }
+    public static final String BLACKDUCK_ENGINE_TYPE = "BLACKDUCK_ENGINE_TYPE";
 
+    public static final String ISSUE_CATEGORY = "3rd Party Component";
+
+    /**
+     * The number of headers we expect in a legitimate CSV file.
+     */
+    public static final Integer BLACKDUCK_HEADER_COUNT = 21;
+
+    /**
+     * Error message about invalid black duck scan file contnt.
+     */
+    public static final String BLACKDUCK_INVALID_CSV = "Invalid Black Duck Hub CSV report";
+
+    public static float HIGH_LIKELIHOOD = 5f;
+
+    public static float HIGH_ACCURACY = 5f;
 }
