@@ -20,3 +20,5 @@ remediationTargetDate=Remediation target date
 remediationActualDate=Remediation actual date
 remediationComment=Remediation comment
 url=URL
+componentName=Component name
+componentVersion=Component version

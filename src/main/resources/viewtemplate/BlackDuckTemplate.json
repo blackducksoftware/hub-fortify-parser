@@ -63,10 +63,24 @@
         },
         {
           "type": "template",
-          "title": "Hub Project Id",
-          "key": "customAttributes.projectId",
+          "title": "Hub Project Version",
+          "key": "customAttributes.projectVersion",
           "templateId": "SIMPLE",
-          "dataType": "integer"
+          "dataType": "string"
+        },
+        {
+          "type": "template",
+          "title": "Hub Component Name",
+          "key": "customAttributes.componentName",
+          "templateId": "SIMPLE",
+          "dataType": "string"
+        },
+        {
+          "type": "template",
+          "title": "Hub Component Version",
+          "key": "customAttributes.componentVersion",
+          "templateId": "SIMPLE",
+          "dataType": "string"
         },
         {
           "type": "template",
@@ -74,6 +88,27 @@
           "key": "customAttributes.exploitability",
           "templateId": "SIMPLE",
           "dataType": "integer"
+        },
+        {
+          "type": "template",
+          "title": "Level of Impact",
+          "key": "customAttributes.impact",
+          "templateId": "SIMPLE",
+          "dataType": "integer"
+        },
+        {
+          "type": "template",
+          "title": "Base Score",
+          "key": "customAttributes.baseScore",
+          "templateId": "SIMPLE",
+          "dataType": "integer"
+        },
+        {
+          "type": "template",
+          "title": "Vulnerability URL",
+          "key": "customAttributes.url",
+          "templateId": "SIMPLE",
+          "dataType": "string"
         }
       ]
     }

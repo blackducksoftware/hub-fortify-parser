@@ -22,10 +22,13 @@
  */
 package com.blackducksoftware.integration.fortify.parser;
 
-import com.univocity.parsers.annotations.Parsed;
-
 import java.math.BigDecimal;
 import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.univocity.parsers.annotations.Parsed;
 
 /**
  * Bean mapped to output of the Hub CSV report
@@ -35,11 +38,18 @@ import java.util.UUID;
  *
  */
 public class BlackDuckIssue {
+    private static Logger LOG = LoggerFactory.getLogger(BlackDuckIssue.class);
 
     /**
      * Unique natural issue identifier.
      */
     private String issueId;
+
+    @Parsed(field = "Project name")
+    private String projectName;
+
+    @Parsed(field = "Project version")
+    private String projectVersion;
 
     @Parsed(field = "Project id")
     private String projectId;
@@ -50,8 +60,8 @@ public class BlackDuckIssue {
     @Parsed(field = "Channel version id")
     private String channelVersionId;
 
-    @Parsed(field = "Project name")
-    private String projectName;
+    @Parsed(field = "Component name")
+    private String componentName;
 
     @Parsed(field = "Version")
     private String version;
@@ -104,6 +114,12 @@ public class BlackDuckIssue {
     @Parsed(field = "URL")
     private String URL;
 
+    @Parsed(field = "Severity")
+    private String severity;
+
+    @Parsed(field = "Scan date")
+    private String scanDate;
+
     /**
      * Returns the unique ID of this particular issue.
      * Using an internal id plus the supplied name via the setId()
@@ -113,10 +129,30 @@ public class BlackDuckIssue {
      */
     public String getId() {
         if (issueId == null) {
-            String uuidData = String.format("%s:%s", BlackDuckUtils.cleanName(projectName), vulnerabilityId);
+            String uuidData = String.format("%s:%s:%s:%s", BlackDuckUtils.cleanName(componentName), BlackDuckUtils.cleanName(version),
+                    BlackDuckUtils.cleanName(channelVersionOriginId), vulnerabilityId);
             issueId = UUID.nameUUIDFromBytes(uuidData.getBytes()).toString();
+            LOG.info("Component name~" + BlackDuckUtils.cleanName(componentName) + "version~" + BlackDuckUtils.cleanName(version)
+                    + ", channel version origin id~" + BlackDuckUtils.cleanName(channelVersionOriginId) + ", vulnerabilityId~" + vulnerabilityId
+                    + ", issueId~" + issueId);
         }
         return issueId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getProjectVersion() {
+        return projectVersion;
+    }
+
+    public void setProjectVersion(String projectVersion) {
+        this.projectVersion = projectVersion;
     }
 
     public String getProjectId() {
@@ -143,12 +179,12 @@ public class BlackDuckIssue {
         this.channelVersionId = channelVersionId;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getComponentName() {
+        return componentName;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setComponentName(String componentName) {
+        this.componentName = componentName;
     }
 
     public String getVersion() {
@@ -283,7 +319,24 @@ public class BlackDuckIssue {
         return URL;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public void setURL(String uRL) {
+        URL = uRL;
     }
+
+    public String getSeverity() {
+        return severity;
+    }
+
+    public void setSeverity(String severity) {
+        this.severity = severity;
+    }
+
+    public String getScanDate() {
+        return scanDate;
+    }
+
+    public void setScanDate(String scanDate) {
+        this.scanDate = scanDate;
+    }
+
 }
