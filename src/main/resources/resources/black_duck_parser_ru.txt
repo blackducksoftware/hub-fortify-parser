@@ -21,3 +21,4 @@ remediationComment=Remediation comment
 url=URL
 componentName=Component name
 componentVersion=Component version
+hubVulnerabilityUrl=Hub Vulnerability URL

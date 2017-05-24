@@ -99,6 +99,9 @@ public class BlackDuckIssue {
     @Parsed(field = "Vulnerability source")
     private String vulnerabilitySource;
 
+    @Parsed(field = "Hub Vulnerability URL")
+    private String hubVulnerabilityUrl;
+
     @Parsed(field = "Remediation status")
     private String remediationStatus;
 
@@ -281,6 +284,14 @@ public class BlackDuckIssue {
 
     public void setVulnerabilitySource(String vulnerabilitySource) {
         this.vulnerabilitySource = vulnerabilitySource;
+    }
+
+    public String getHubVulnerabilityUrl() {
+        return hubVulnerabilityUrl;
+    }
+
+    public void setHubVulnerabilityUrl(String hubVulnerabilityUrl) {
+        this.hubVulnerabilityUrl = hubVulnerabilityUrl;
     }
 
     public String getRemediationStatus() {

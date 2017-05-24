@@ -41,8 +41,9 @@
         },
         {
           "type": "template",
-          "key": "primaryTag",
-          "templateId": "PRIMARYTAG",
+          "title": "Hub Vulnerability URL",
+          "key": "customAttributes.hubVulnerabilityUrl",
+          "templateId": "SIMPLE",
           "dataType": "string"
         }
       ]

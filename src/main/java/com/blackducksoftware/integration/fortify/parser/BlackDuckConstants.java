@@ -40,7 +40,7 @@ public class BlackDuckConstants {
     /**
      * The number of headers we expect in a legitimate CSV file.
      */
-    public static final Integer BLACKDUCK_HEADER_COUNT = 25;
+    public static final Integer BLACKDUCK_HEADER_COUNT = 26;
 
     /**
      * Error message about invalid black duck scan file contnt.

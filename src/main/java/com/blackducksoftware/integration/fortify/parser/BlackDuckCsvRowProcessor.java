@@ -97,13 +97,8 @@ public class BlackDuckCsvRowProcessor extends BlackDuckBeanProcessor {
         vulnerabilityBuilder.setImpact((blackDuckIssue.getImpact() == null) ? 0 : blackDuckIssue.getImpact().floatValue());
         vulnerabilityBuilder.setSeverity((blackDuckIssue.getExploitability() == null) ? 0 : blackDuckIssue.getExploitability().floatValue());
         // Blackduck specific attributes values
-        vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.PROJECT_ID, blackDuckIssue.getProjectId());
         vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.PROJECT_NAME, blackDuckIssue.getProjectName());
-        // vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.VERSION_ID,
-        // blackDuckIssue.getVersionId());
         vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.PROJECT_VERSION, blackDuckIssue.getProjectVersion());
-        // vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.CHANNEL_VERSION_ID,
-        // blackDuckIssue.getChannelVersionId());
         vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.CHANNEL_VERSION_ORIGIN, blackDuckIssue.getChannelVersionOrigin());
         vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.CHANNEL_VERSION_ORIGIN_ID,
                 blackDuckIssue.getChannelVersionOriginId());
@@ -119,6 +114,7 @@ public class BlackDuckCsvRowProcessor extends BlackDuckBeanProcessor {
         vulnerabilityBuilder.setDecimalCustomAttributeValue(BlackDuckVulnerabilityAttribute.EXPLOITABILITY, blackDuckIssue.getExploitability());
         vulnerabilityBuilder.setDecimalCustomAttributeValue(BlackDuckVulnerabilityAttribute.IMPACT, blackDuckIssue.getImpact());
         vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.VULNERABILITY_SOURCE, blackDuckIssue.getVulnerabilitySource());
+        vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.HUB_VULNERABILITY_URL, blackDuckIssue.getHubVulnerabilityUrl());
         vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.REMEDIATION_STATUS, blackDuckIssue.getRemediationStatus());
         vulnerabilityBuilder.setDateCustomAttributeValue(BlackDuckVulnerabilityAttribute.REMEDIATION_TARGET_DATE,
                 BlackDuckUtils.convertToDate(blackDuckIssue.getRemediationTargetDate()));
