@@ -9,7 +9,7 @@ ext {
 group 'com.blackducksoftware.integration'
 
 // plugin version, note the version must match versionRegex.
-version = '1.0'
+version = '2.0'
 
 if (project.hasProperty('devBuild')) {
     // Gradle has been run with option -PdevBuild - auto increment plugin version
