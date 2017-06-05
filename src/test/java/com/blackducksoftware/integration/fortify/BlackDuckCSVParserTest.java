@@ -22,23 +22,23 @@
  */
 package com.blackducksoftware.integration.fortify;
 
-import com.blackducksoftware.integration.fortify.parser.BlackDuckBeanProcessor;
-import com.blackducksoftware.integration.fortify.parser.BlackDuckCSVParser;
-import com.blackducksoftware.integration.fortify.parser.BlackDuckConstants;
-import com.blackducksoftware.integration.fortify.parser.BlackDuckIssue;
-import com.univocity.parsers.common.ParsingContext;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static com.blackducksoftware.integration.fortify.parser.BlackDuckUtils.getMD5ForStream;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
 
-import static com.blackducksoftware.integration.fortify.parser.BlackDuckUtils.getMD5ForStream;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.blackducksoftware.integration.fortify.parser.BlackDuckBeanProcessor;
+import com.blackducksoftware.integration.fortify.parser.BlackDuckCSVParser;
+import com.blackducksoftware.integration.fortify.parser.BlackDuckConstants;
+import com.blackducksoftware.integration.fortify.parser.BlackDuckIssue;
+import com.univocity.parsers.common.ParsingContext;
 
 /**
  * Testing the CSV output of the Hub file.
@@ -154,33 +154,12 @@ public class BlackDuckCSVParserTest {
                 @Override
                 public void beanProcessed(BlackDuckIssue bean, ParsingContext context) {
                     rowsProcessed++;
-                    if (rowsProcessed == 1) {
-                        Assert.assertEquals("8c60f9fd-7885-48e5-9890-05e2fd8149e0", bean.getProjectId());
-                        Assert.assertEquals("2d754b4e-c2fc-42f7-876a-f7eefd9b6d8b", bean.getVersionId());
-                        Assert.assertEquals("dpkg", bean.getProjectName());
-                        Assert.assertEquals("1.17.26", bean.getVersion());
-                        Assert.assertEquals("CVE-2006-0300", bean.getVulnerabilityId());
-                        Assert.assertNotNull(bean.getDescription());
-                        Assert.assertEquals("2/24/2006", bean.getPublishedOn());
-                        Assert.assertEquals("3/7/2011", bean.getUpdatedOn());
-                        // Must provide delta on the floats
-                        Assert.assertEquals(BigDecimal.valueOf(5.1), bean.getBaseScore());
-                        Assert.assertEquals(BigDecimal.valueOf(4.9), bean.getExploitability());
-                        Assert.assertEquals(BigDecimal.valueOf(6.4), bean.getImpact());
-                        Assert.assertEquals("NVD", bean.getVulnerabilitySource());
-                        Assert.assertEquals("NEW", bean.getRemediationStatus());
-                        Assert.assertEquals("2/9/2016", bean.getRemediationTargetDate());
-                        Assert.assertEquals("2/9/2016", bean.getRemediationActualDate());
-                        Assert.assertEquals("http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2006-0300", bean.getURL());
-                        // Test for unique id
-                        Assert.assertEquals("121c18ed-25c7-33ea-bc14-17f03e5aaa29", bean.getId());
-                    }
                 }
 
                 @Override
                 public void processEnded(ParsingContext context) {
                     super.processEnded(context);
-                    Assert.assertEquals(8, rowsProcessed);
+                    Assert.assertEquals(11, rowsProcessed);
                 }
             });
         } catch (Exception e) {
@@ -208,7 +187,7 @@ public class BlackDuckCSVParserTest {
                 public void processEnded(ParsingContext context) {
                     super.processEnded(context);
                     // Test for correct rows
-                    Assert.assertEquals(33, rowsProcessed);
+                    Assert.assertEquals(41, rowsProcessed);
                 }
             });
         } catch (Exception e) {
