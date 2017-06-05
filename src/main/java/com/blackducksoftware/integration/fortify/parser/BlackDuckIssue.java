@@ -1,18 +1,18 @@
 /**
  * Copyright (C) 2016 Black Duck Software, Inc.
  * http://www.blackducksoftware.com/
- * 
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements. See the NOTICE file
  * distributed with this work for additional information
  * regarding copyright ownership.
- * 
+ *
  * The ASF licenses this file
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -20,18 +20,36 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.blackducksoftware.integration.fortify;
+package com.blackducksoftware.integration.fortify.parser;
+
+import java.math.BigDecimal;
+import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.univocity.parsers.annotations.Parsed;
 
 /**
  * Bean mapped to output of the Hub CSV report
  * If the columns change, the mappings here will need to be updated.
- * 
+ *
  * @author akamen
- * 
+ *
  */
 public class BlackDuckIssue {
+    private static Logger LOG = LoggerFactory.getLogger(BlackDuckIssue.class);
+
+    /**
+     * Unique natural issue identifier.
+     */
+    private String issueId;
+
+    @Parsed(field = "Project name")
+    private String projectName;
+
+    @Parsed(field = "Project version")
+    private String projectVersion;
 
     @Parsed(field = "Project id")
     private String projectId;
@@ -42,8 +60,8 @@ public class BlackDuckIssue {
     @Parsed(field = "Channel version id")
     private String channelVersionId;
 
-    @Parsed(field = "Project name")
-    private String projectName;
+    @Parsed(field = "Component name")
+    private String componentName;
 
     @Parsed(field = "Version")
     private String version;
@@ -70,16 +88,19 @@ public class BlackDuckIssue {
     private String updatedOn;
 
     @Parsed(field = "Base Score")
-    private float baseScore;
+    private BigDecimal baseScore;
 
     @Parsed(field = "Exploitability")
-    private float exploitability;
+    private BigDecimal exploitability;
 
     @Parsed(field = "Impact")
-    private float impact;
+    private BigDecimal impact;
 
     @Parsed(field = "Vulnerability source")
     private String vulnerabilitySource;
+
+    @Parsed(field = "Hub Vulnerability URL")
+    private String hubVulnerabilityUrl;
 
     @Parsed(field = "Remediation status")
     private String remediationStatus;
@@ -96,26 +117,45 @@ public class BlackDuckIssue {
     @Parsed(field = "URL")
     private String URL;
 
-    private String issueId;
+    @Parsed(field = "Severity")
+    private String severity;
 
-    public void setId(String name) {
-        issueId = cleanName(name) + ":" + vulnerabilityId;
-    }
+    @Parsed(field = "Scan date")
+    private String scanDate;
 
     /**
-     * * Returns the unique ID of this particular issue.
+     * Returns the unique ID of this particular issue.
      * Using an internal id plus the supplied name via the setId()
-     * 
      * Format will be supplied name during setid + ":" + vulnerability ID
-     * 
-     * @return
+     *
+     * @return unique issue ID
      */
-    public String getId()
-    {
+    public String getId() {
         if (issueId == null) {
-            setId("");
+            String uuidData = String.format("%s:%s:%s:%s", BlackDuckUtils.cleanName(componentName), BlackDuckUtils.cleanName(version),
+                    BlackDuckUtils.cleanName(channelVersionOriginId), vulnerabilityId);
+            issueId = UUID.nameUUIDFromBytes(uuidData.getBytes()).toString();
+            LOG.info("Component name~" + BlackDuckUtils.cleanName(componentName) + "version~" + BlackDuckUtils.cleanName(version)
+                    + ", channel version origin id~" + BlackDuckUtils.cleanName(channelVersionOriginId) + ", vulnerabilityId~" + vulnerabilityId
+                    + ", issueId~" + issueId);
         }
         return issueId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getProjectVersion() {
+        return projectVersion;
+    }
+
+    public void setProjectVersion(String projectVersion) {
+        this.projectVersion = projectVersion;
     }
 
     public String getProjectId() {
@@ -142,12 +182,12 @@ public class BlackDuckIssue {
         this.channelVersionId = channelVersionId;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getComponentName() {
+        return componentName;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setComponentName(String componentName) {
+        this.componentName = componentName;
     }
 
     public String getVersion() {
@@ -214,27 +254,27 @@ public class BlackDuckIssue {
         this.updatedOn = updatedOn;
     }
 
-    public float getBaseScore() {
+    public BigDecimal getBaseScore() {
         return baseScore;
     }
 
-    public void setBaseScore(float baseScore) {
+    public void setBaseScore(BigDecimal baseScore) {
         this.baseScore = baseScore;
     }
 
-    public float getExploitability() {
+    public BigDecimal getExploitability() {
         return exploitability;
     }
 
-    public void setExploitability(float exploitability) {
+    public void setExploitability(BigDecimal exploitability) {
         this.exploitability = exploitability;
     }
 
-    public float getImpact() {
+    public BigDecimal getImpact() {
         return impact;
     }
 
-    public void setImpact(float impact) {
+    public void setImpact(BigDecimal impact) {
         this.impact = impact;
     }
 
@@ -244,6 +284,14 @@ public class BlackDuckIssue {
 
     public void setVulnerabilitySource(String vulnerabilitySource) {
         this.vulnerabilitySource = vulnerabilitySource;
+    }
+
+    public String getHubVulnerabilityUrl() {
+        return hubVulnerabilityUrl;
+    }
+
+    public void setHubVulnerabilityUrl(String hubVulnerabilityUrl) {
+        this.hubVulnerabilityUrl = hubVulnerabilityUrl;
     }
 
     public String getRemediationStatus() {
@@ -282,17 +330,24 @@ public class BlackDuckIssue {
         return URL;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public void setURL(String uRL) {
+        URL = uRL;
     }
 
-    /**
-     * @param name2
-     * @return
-     */
-    private String cleanName(String name) {
-        name = name.replace(" ", "");
-        return name;
+    public String getSeverity() {
+        return severity;
+    }
+
+    public void setSeverity(String severity) {
+        this.severity = severity;
+    }
+
+    public String getScanDate() {
+        return scanDate;
+    }
+
+    public void setScanDate(String scanDate) {
+        this.scanDate = scanDate;
     }
 
 }
