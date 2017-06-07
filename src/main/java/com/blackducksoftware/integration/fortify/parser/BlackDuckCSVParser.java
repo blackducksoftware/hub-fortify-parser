@@ -103,9 +103,9 @@ public class BlackDuckCSVParser {
                     continue;
                 } else {
                     String[] lineArr = sCurrentLine.split(",");
-                    LOG.info("Scan date from File::" + lineArr[lineArr.length - 1]);
+                    LOG.debug("Scan date from File::" + lineArr[lineArr.length - 1]);
                     scanDate = BlackDuckUtils.convertToDateTime(lineArr[lineArr.length - 1]);
-                    LOG.info("Scan date::" + scanDate);
+                    LOG.debug("Scan date::" + scanDate);
                     break;
                 }
             }

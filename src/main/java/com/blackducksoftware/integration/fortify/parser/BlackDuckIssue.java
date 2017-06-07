@@ -135,7 +135,7 @@ public class BlackDuckIssue {
             String uuidData = String.format("%s:%s:%s:%s", BlackDuckUtils.cleanName(componentName), BlackDuckUtils.cleanName(version),
                     BlackDuckUtils.cleanName(channelVersionOriginId), vulnerabilityId);
             issueId = UUID.nameUUIDFromBytes(uuidData.getBytes()).toString();
-            LOG.info("Component name~" + BlackDuckUtils.cleanName(componentName) + "version~" + BlackDuckUtils.cleanName(version)
+            LOG.debug("Component name~" + BlackDuckUtils.cleanName(componentName) + "version~" + BlackDuckUtils.cleanName(version)
                     + ", channel version origin id~" + BlackDuckUtils.cleanName(channelVersionOriginId) + ", vulnerabilityId~" + vulnerabilityId
                     + ", issueId~" + issueId);
         }
