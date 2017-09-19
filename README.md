@@ -4,7 +4,7 @@ A simple parser of the Hub report into a Fortify friendly format.
 
 # Hub Fortify Documentation
 
-Available on our wiki: https://github.com/blackducksoftware/hub-fortify/wiki
+Available on Black Duck's confluence page: https://blackducksoftware.atlassian.net/wiki/spaces/PARTNERS/pages/48008579/Black+Duck+Hub+Fortify+SSC+Plugin
 
 # Build
 
