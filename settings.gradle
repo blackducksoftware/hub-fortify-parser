@@ -1,2 +1,10 @@
 rootProject.name = 'blackduck-plugin'
 
+include ':operational-risk'
+include ':security-risk'
+include ':license-risk'
+
+// change subproject name
+project(":operational-risk").name = "blackduck-operational-risk-plugin"
+project(":security-risk").name = "blackduck-security-risk-plugin"
+project(":license-risk").name = "blackduck-license-risk-plugin"

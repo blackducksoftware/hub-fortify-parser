@@ -6,3 +6,8 @@
 *.ipr
 *~
 /bin/
+/.settings/*
+
+.classpath
+
+.project

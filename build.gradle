@@ -1,71 +1,75 @@
-apply plugin: 'java'
-apply plugin: 'idea'
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
 
-ext {
-    versionRegex = '(\\d+)(\\.\\d+)*'
-}
-
-// artifact group
-group 'com.blackducksoftware.integration'
-
-// plugin version, note the version must match versionRegex.
-version = '2.0.0'
-
-if (project.hasProperty('devBuild')) {
-    // Gradle has been run with option -PdevBuild - auto increment plugin version
-    def time = System.currentTimeMillis().intdiv(1000)
-    def hours = time.intdiv(3600)
-    def secs = time % 3600
-    version = "$version.$hours.$secs"
-}
-println "Building version $version"
-
-repositories {
-    // repository with fortify artifacts
-    ivy {
-        name 'blackduck'
-        url = [projectDir, "fortifyRepository"].join(File.separator)
+    ext {
+        versionRegex = '(\\d+)(\\.\\d+)*'
     }
 
-    mavenCentral()
-}
+    // artifact group
+    group 'com.blackducksoftware.integration'
 
-configurations {
-    compileExport
-    compile.extendsFrom compileExport
-}
+    // plugin version, note the version must match versionRegex.
+    version = '2.0.2'
 
-dependencies {
-    // plugin specific dependencies
-    compileExport 'com.univocity:univocity-parsers:1.3.2'
-    compileExport 'commons-codec:commons-codec:1.6'
+    if (project.hasProperty('devBuild')) {
+        // Gradle has been run with option -PdevBuild - auto increment plugin version
+        def time = System.currentTimeMillis().intdiv(1000)
+        def hours = time.intdiv(3600)
+        def secs = time % 3600
+        version = "$version.$hours.$secs"
+    }
+    println "Building version $version"
 
-    // dependencies provided by plugin runtime
-    compile 'com.fortify.plugin:plugin-api:1.0'
-    compile 'org.slf4j:slf4j-api:1.7.21'
-
-    testCompile 'junit:junit:4.12'
-    testRuntime 'org.slf4j:slf4j-simple:1.7.21'
-}
-
-jar {
-    doFirst {
-        // check if version matches requirements
-        if (!version.matches(versionRegex)) {
-            throw new InvalidUserDataException("Plugin version '$version' does not match '$versionRegex'")
+    repositories {
+        // repository with fortify artifacts
+        ivy {
+            name 'blackduck'
+            url = [projectDir, "../fortifyRepository"].join(File.separator)
         }
+
+        mavenCentral()
     }
-    // replace version placeholders in plugin.xml
-    filesMatching('plugin.xml') {
-        filter {
-            it.replaceAll('<!--VERSION-->.*?<!--/VERSION-->', version)
+
+    configurations {
+        compileExport
+        compile.extendsFrom compileExport
+    }
+
+    dependencies {
+        // plugin specific dependencies
+        compileExport 'com.univocity:univocity-parsers:1.3.2'
+        compileExport 'commons-codec:commons-codec:1.6'
+
+        // dependencies provided by plugin runtime
+        compile 'com.fortify.plugin:plugin-api:1.0'
+        compile 'org.slf4j:slf4j-api:1.7.21'
+
+        testCompile 'junit:junit:4.12'
+        testRuntime 'org.slf4j:slf4j-simple:1.7.21'
+    }
+
+    jar {
+        doFirst {
+            // check if version matches requirements
+            if (!version.matches(versionRegex)) {
+                throw new InvalidUserDataException("Plugin version '$version' does not match '$versionRegex'")
+            }
         }
+        // replace version placeholders in plugin.xml
+        filesMatching('plugin.xml') {
+            filter {
+                it.replaceAll('<!--VERSION-->.*?<!--/VERSION-->', version)
+            }
+        }
+        // include files from compileExport dependencies
+        from { configurations.compileExport.collect { it.isDirectory() ? it : zipTree(it).matching { exclude 'META-INF/*' } } }
     }
-    // include files from compileExport dependencies
-    from { configurations.compileExport.collect { it.isDirectory() ? it : zipTree(it).matching { exclude 'META-INF/*' } } }
+
+    // Define Gradle version for wrapper.
+    task wrapper(type: Wrapper) {
+        gradleVersion = '3.1'
+    }
 }
 
-// Define Gradle version for wrapper.
-task wrapper(type: Wrapper) {
-    gradleVersion = '3.1'
-}
+project.tasks.remove('jar')

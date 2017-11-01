@@ -4,7 +4,7 @@
         id="com.blackducksoftware.fortifyparserplugin" api-version="1.0">
     <plugin-info>
         <name>BlackDuck Vulnerability Parser</name>
-        <version><!--VERSION-->2.0.0<!--/VERSION--></version>
+        <version><!--VERSION-->.*?<!--/VERSION--></version>
         <data-version>2</data-version>
         <vendor name="BlackDuck Software" url="https://www.blackducksoftware.com/"/>
         <description>BlackDuck scan results parser</description>
