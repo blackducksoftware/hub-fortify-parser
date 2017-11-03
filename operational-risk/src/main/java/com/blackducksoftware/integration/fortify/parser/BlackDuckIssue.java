@@ -22,7 +22,6 @@
  */
 package com.blackducksoftware.integration.fortify.parser;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -51,68 +50,32 @@ public class BlackDuckIssue {
     @Parsed(field = "Project version")
     private String projectVersion;
 
-    @Parsed(field = "Project id")
-    private String projectId;
-
-    @Parsed(field = "Version id")
-    private String versionId;
-
-    @Parsed(field = "Channel version id")
-    private String channelVersionId;
-
     @Parsed(field = "Component name")
     private String componentName;
 
-    @Parsed(field = "Version")
-    private String version;
+    @Parsed(field = "Component Version")
+    private String componentVersion;
 
-    @Parsed(field = "Channel version origin")
-    private String channelVersionOrigin;
+    @Parsed(field = "Component id")
+    private String componentId;
 
-    @Parsed(field = "Channel version origin id")
-    private String channelVersionOriginId;
+    @Parsed(field = "Component Version id")
+    private String componentVersionId;
 
-    @Parsed(field = "Channel version origin name")
-    private String channelVersionOriginName;
+    @Parsed(field = "Released On")
+    private String releasedOn;
 
-    @Parsed(field = "Vulnerability id")
-    private String vulnerabilityId;
+    @Parsed(field = "Newer Released Count")
+    private String newerReleasedCount;
 
-    @Parsed(field = "Description")
-    private String description;
+    @Parsed(field = "Trending")
+    private String trending;
 
-    @Parsed(field = "Published on")
-    private String publishedOn;
+    @Parsed(field = "Commit Count Last 12 Month")
+    private String commitCount12Month;
 
-    @Parsed(field = "Updated on")
-    private String updatedOn;
-
-    @Parsed(field = "Base Score")
-    private BigDecimal baseScore;
-
-    @Parsed(field = "Exploitability")
-    private BigDecimal exploitability;
-
-    @Parsed(field = "Impact")
-    private BigDecimal impact;
-
-    @Parsed(field = "Vulnerability source")
-    private String vulnerabilitySource;
-
-    @Parsed(field = "Hub Vulnerability URL")
-    private String hubVulnerabilityUrl;
-
-    @Parsed(field = "Remediation status")
-    private String remediationStatus;
-
-    @Parsed(field = "Remediation target date")
-    private String remediationTargetDate;
-
-    @Parsed(field = "Remediation actual date")
-    private String remediationActualDate;
-
-    @Parsed(field = "Remediation comment")
-    private String remediationComment;
+    @Parsed(field = "Contributor Count Last 12 Month")
+    private String contributorCount12Month;
 
     @Parsed(field = "URL")
     private String URL;
@@ -132,14 +95,20 @@ public class BlackDuckIssue {
      */
     public String getId() {
         if (issueId == null) {
-            String uuidData = String.format("%s:%s:%s:%s", BlackDuckUtils.cleanName(componentName), BlackDuckUtils.cleanName(version),
-                    BlackDuckUtils.cleanName(channelVersionOriginId), vulnerabilityId);
+            String uuidData = String.format("%s:%s:%s:%s", BlackDuckUtils.cleanName(componentId), BlackDuckUtils.cleanName(componentVersionId));
             issueId = UUID.nameUUIDFromBytes(uuidData.getBytes()).toString();
-            LOG.debug("Component name~" + BlackDuckUtils.cleanName(componentName) + "version~" + BlackDuckUtils.cleanName(version)
-                    + ", channel version origin id~" + BlackDuckUtils.cleanName(channelVersionOriginId) + ", vulnerabilityId~" + vulnerabilityId
+            LOG.debug("Component Id~" + BlackDuckUtils.cleanName(componentId) + ", Version Id~" + BlackDuckUtils.cleanName(componentVersionId)
                     + ", issueId~" + issueId);
         }
         return issueId;
+    }
+
+    public String getIssueId() {
+        return issueId;
+    }
+
+    public void setIssueId(String issueId) {
+        this.issueId = issueId;
     }
 
     public String getProjectName() {
@@ -158,30 +127,6 @@ public class BlackDuckIssue {
         this.projectVersion = projectVersion;
     }
 
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    public String getVersionId() {
-        return versionId;
-    }
-
-    public void setVersionId(String versionId) {
-        this.versionId = versionId;
-    }
-
-    public String getChannelVersionId() {
-        return channelVersionId;
-    }
-
-    public void setChannelVersionId(String channelVersionId) {
-        this.channelVersionId = channelVersionId;
-    }
-
     public String getComponentName() {
         return componentName;
     }
@@ -190,140 +135,68 @@ public class BlackDuckIssue {
         this.componentName = componentName;
     }
 
-    public String getVersion() {
-        return version;
+    public String getComponentVersion() {
+        return componentVersion;
     }
 
-    public void setVersion(String version) {
-        this.version = version;
+    public void setComponentVersion(String componentVersion) {
+        this.componentVersion = componentVersion;
     }
 
-    public String getChannelVersionOrigin() {
-        return channelVersionOrigin;
+    public String getComponentId() {
+        return componentId;
     }
 
-    public void setChannelVersionOrigin(String channelVersionOrigin) {
-        this.channelVersionOrigin = channelVersionOrigin;
+    public void setComponentId(String componentId) {
+        this.componentId = componentId;
     }
 
-    public String getChannelVersionOriginId() {
-        return channelVersionOriginId;
+    public String getComponentVersionId() {
+        return componentVersionId;
     }
 
-    public void setChannelVersionOriginId(String channelVersionOriginId) {
-        this.channelVersionOriginId = channelVersionOriginId;
+    public void setComponentVersionId(String componentVersionId) {
+        this.componentVersionId = componentVersionId;
     }
 
-    public String getChannelVersionOriginName() {
-        return channelVersionOriginName;
+    public String getReleasedOn() {
+        return releasedOn;
     }
 
-    public void setChannelVersionOriginName(String channelVersionOriginName) {
-        this.channelVersionOriginName = channelVersionOriginName;
+    public void setReleasedOn(String releasedOn) {
+        this.releasedOn = releasedOn;
     }
 
-    public String getVulnerabilityId() {
-        return vulnerabilityId;
+    public String getNewerReleasedCount() {
+        return newerReleasedCount;
     }
 
-    public void setVulnerabilityId(String vulnerabilityId) {
-        this.vulnerabilityId = vulnerabilityId;
+    public void setNewerReleasedCount(String newerReleasedCount) {
+        this.newerReleasedCount = newerReleasedCount;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTrending() {
+        return trending;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTrending(String trending) {
+        this.trending = trending;
     }
 
-    public String getPublishedOn() {
-        return publishedOn;
+    public String getCommitCount12Month() {
+        return commitCount12Month;
     }
 
-    public void setPublishedOn(String publishedOn) {
-        this.publishedOn = publishedOn;
+    public void setCommitCount12Month(String commitCount12Month) {
+        this.commitCount12Month = commitCount12Month;
     }
 
-    public String getUpdatedOn() {
-        return updatedOn;
+    public String getContributorCount12Month() {
+        return contributorCount12Month;
     }
 
-    public void setUpdatedOn(String updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public BigDecimal getBaseScore() {
-        return baseScore;
-    }
-
-    public void setBaseScore(BigDecimal baseScore) {
-        this.baseScore = baseScore;
-    }
-
-    public BigDecimal getExploitability() {
-        return exploitability;
-    }
-
-    public void setExploitability(BigDecimal exploitability) {
-        this.exploitability = exploitability;
-    }
-
-    public BigDecimal getImpact() {
-        return impact;
-    }
-
-    public void setImpact(BigDecimal impact) {
-        this.impact = impact;
-    }
-
-    public String getVulnerabilitySource() {
-        return vulnerabilitySource;
-    }
-
-    public void setVulnerabilitySource(String vulnerabilitySource) {
-        this.vulnerabilitySource = vulnerabilitySource;
-    }
-
-    public String getHubVulnerabilityUrl() {
-        return hubVulnerabilityUrl;
-    }
-
-    public void setHubVulnerabilityUrl(String hubVulnerabilityUrl) {
-        this.hubVulnerabilityUrl = hubVulnerabilityUrl;
-    }
-
-    public String getRemediationStatus() {
-        return remediationStatus;
-    }
-
-    public void setRemediationStatus(String remediationStatus) {
-        this.remediationStatus = remediationStatus;
-    }
-
-    public String getRemediationTargetDate() {
-        return remediationTargetDate;
-    }
-
-    public void setRemediationTargetDate(String remediationTargetDate) {
-        this.remediationTargetDate = remediationTargetDate;
-    }
-
-    public String getRemediationActualDate() {
-        return remediationActualDate;
-    }
-
-    public void setRemediationActualDate(String remediationActualDate) {
-        this.remediationActualDate = remediationActualDate;
-    }
-
-    public String getRemediationComment() {
-        return remediationComment;
-    }
-
-    public void setRemediationComment(String remediationComment) {
-        this.remediationComment = remediationComment;
+    public void setContributorCount12Month(String contributorCount12Month) {
+        this.contributorCount12Month = contributorCount12Month;
     }
 
     public String getURL() {

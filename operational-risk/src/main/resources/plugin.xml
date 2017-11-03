@@ -3,11 +3,11 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PluginDescriptor"
         id="com.blackducksoftware.fortifyparserplugin" api-version="1.0">
     <plugin-info>
-        <name>BlackDuck Vulnerability Parser</name>
+        <name>BlackDuck Operational Parser</name>
         <version><!--VERSION-->.*?<!--/VERSION--></version>
         <data-version>2</data-version>
         <vendor name="BlackDuck Software" url="https://www.blackducksoftware.com/"/>
-        <description>BlackDuck scan results parser</description>
+        <description>BlackDuck Operation risk parser</description>
         <resources>
             <localization>
                 <language id="default" location="/resources/black_duck_parser.txt"/>
@@ -21,7 +21,7 @@
         </resources>
     </plugin-info>
     <issue-parser>
-        <engine-type>BLACKDUCK</engine-type>
+        <engine-type>BLACKDUCK-OPERATIONAL-RISK</engine-type>
         <view-template location="/viewtemplate/BlackDuckTemplate.json">
             <description>Default BlackDuck vulnerability view template.</description>
         </view-template>
