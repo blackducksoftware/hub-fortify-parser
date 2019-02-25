@@ -4,11 +4,15 @@
 
 # Overview
 
-A simple parser of the Hub report into a Fortify friendly format.  
+A simple parser of the Black Duck report into a Fortify friendly format.
 
-# Hub Fortify Documentation
+Note: This parser is designed to be used primarily with the Black Duck Fortify Integration Service, which can be found here:
+https://github.com/blackducksoftware/hub-fortify-ssc-integration-service
 
-Available on Black Duck's confluence page: https://blackducksoftware.atlassian.net/wiki/spaces/PARTNERS/pages/48008579/Black+Duck+Hub+Fortify+SSC+Plugin
+# Black Duck Fortify Documentation
+
+Official documentation can be found here:
+https://synopsys.atlassian.net/wiki/spaces/PARTNERS/pages/7471177/Black+Duck+Fortify+SSC+Plugin
 
 # Build
 
