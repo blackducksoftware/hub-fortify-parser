@@ -5,7 +5,7 @@
     <plugin-info>
         <name>BlackDuck Vulnerability Parser</name>
         <version><!--VERSION-->2.0.1<!--/VERSION--></version>
-        <data-version>2</data-version>
+        <data-version>3</data-version>
         <vendor name="BlackDuck Software" url="https://www.blackducksoftware.com/"/>
         <description>BlackDuck scan results parser</description>
         <resources>

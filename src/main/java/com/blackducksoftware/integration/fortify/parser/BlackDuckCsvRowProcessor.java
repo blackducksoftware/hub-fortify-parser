@@ -25,7 +25,7 @@ public class BlackDuckCsvRowProcessor extends BlackDuckBeanProcessor {
      *            VulnerabilityHandler implementation to provide processor the way to pass parsed
      *            vulnerabilities from parser to SSC.
      */
-    public BlackDuckCsvRowProcessor(VulnerabilityHandler vulnerabilityHandler) {
+    public BlackDuckCsvRowProcessor(final VulnerabilityHandler vulnerabilityHandler) {
         super();
         this.vulnerabilityHandler = vulnerabilityHandler;
     }
@@ -37,7 +37,7 @@ public class BlackDuckCsvRowProcessor extends BlackDuckBeanProcessor {
      *            com.univocity.parsers.common.ParsingContext instanse
      */
     @Override
-    public void processStarted(ParsingContext context) {
+    public void processStarted(final ParsingContext context) {
         super.processStarted(context);
         rowsProcessed = 0;
     }
@@ -48,7 +48,7 @@ public class BlackDuckCsvRowProcessor extends BlackDuckBeanProcessor {
      * @param context
      */
     @Override
-    public void beanProcessed(BlackDuckIssue blackDuckIssue, ParsingContext context) {
+    public void beanProcessed(final BlackDuckIssue blackDuckIssue, final ParsingContext context) {
         if (rowsProcessed == 0) {
             validateHeaders(context.headers());
         }
@@ -56,7 +56,7 @@ public class BlackDuckCsvRowProcessor extends BlackDuckBeanProcessor {
         rowsProcessed++;
     }
 
-    private void validateHeaders(String[] headers) {
+    private void validateHeaders(final String[] headers) {
         if (headers == null) {
             LOG.error("Empty headers");
             throw new BlackDuckParsingException(BlackDuckConstants.BLACKDUCK_INVALID_CSV);
@@ -67,7 +67,7 @@ public class BlackDuckCsvRowProcessor extends BlackDuckBeanProcessor {
         }
     }
 
-    private void buildVulnerability(BlackDuckIssue blackDuckIssue, VulnerabilityHandler vulnerabilityHandler) {
+    private void buildVulnerability(final BlackDuckIssue blackDuckIssue, final VulnerabilityHandler vulnerabilityHandler) {
         // Start building new vulnerability and obtain builder object
         final StaticVulnerabilityBuilder vulnerabilityBuilder = vulnerabilityHandler.startStaticVulnerability(blackDuckIssue.getId());
 
@@ -124,17 +124,23 @@ public class BlackDuckCsvRowProcessor extends BlackDuckBeanProcessor {
         vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.URL, blackDuckIssue.getURL());
         vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.COMPONENT_NAME, blackDuckIssue.getComponentName());
         vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.COMPONENT_VERSION, blackDuckIssue.getVersion());
+        vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.UPGRADE_VERSION, blackDuckIssue.getUpgradeVersion());
+        vulnerabilityBuilder.setDateCustomAttributeValue(BlackDuckVulnerabilityAttribute.UPGRADE_RELEASED_ON,
+                BlackDuckUtils.convertToDate(blackDuckIssue.getUpgradeVersionReleasedOn()));
+        vulnerabilityBuilder.setStringCustomAttributeValue(BlackDuckVulnerabilityAttribute.LATEST_VERSION, blackDuckIssue.getLatestVersion());
+        vulnerabilityBuilder.setDateCustomAttributeValue(BlackDuckVulnerabilityAttribute.LATEST_RELEASED_ON,
+                BlackDuckUtils.convertToDate(blackDuckIssue.getLatestVersionReleasedOn()));
         vulnerabilityBuilder.completeVulnerability();
     }
 
     @Override
-    public void processEnded(ParsingContext context) {
+    public void processEnded(final ParsingContext context) {
         super.processEnded(context);
     }
 
     private static class BlackDuckParsingException extends RuntimeException {
 
-        public BlackDuckParsingException(String message) {
+        public BlackDuckParsingException(final String message) {
             super(message);
         }
 
