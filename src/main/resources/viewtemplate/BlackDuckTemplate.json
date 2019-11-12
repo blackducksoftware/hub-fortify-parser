@@ -8,6 +8,41 @@
       "dataType": "string"
     },
     {
+      "type": "template",
+      "templateId": "TITLEBOX",
+      "title": "Vulnerability recommendation",
+      "items": [
+        {
+          "type": "template",
+          "title": "Upgrade Version",
+          "key": "customAttributes.upgradeVersion",
+          "templateId": "SIMPLE",
+          "dataType": "string"
+        },
+        {
+          "type": "template",
+          "title": "Upgrade Version Released On",
+          "key": "customAttributes.upgradeVersionReleasedOn",
+          "templateId": "SIMPLE",
+          "dataType": "string"
+        },
+        {
+          "type": "template",
+          "title": "Latest Version",
+          "key": "customAttributes.latestVersion",
+          "templateId": "SIMPLE",
+          "dataType": "string"
+        },
+        {
+          "type": "template",
+          "title": "Latest Version Released On",
+          "key": "customAttributes.latestVersionReleasedOn",
+          "templateId": "SIMPLE",
+          "dataType": "string"
+        }
+      ]
+    },
+    {
       "type": "fieldset",
       "htmlClass": "container-spacer-bottom",
       "items": [

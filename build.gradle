@@ -5,6 +5,14 @@ ext {
     versionRegex = '(\\d+)(\\.\\d+)*'
 }
 
+sourceCompatibility = 1.8
+
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
 // artifact group
 group 'com.blackducksoftware.integration'
 
