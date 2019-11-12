@@ -5,11 +5,19 @@ ext {
     versionRegex = '(\\d+)(\\.\\d+)*'
 }
 
+sourceCompatibility = 1.8
+
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
 // artifact group
 group 'com.blackducksoftware.integration'
 
 // plugin version, note the version must match versionRegex.
-version = '2.0.1'
+version = '2.0.2'
 
 if (project.hasProperty('devBuild')) {
     // Gradle has been run with option -PdevBuild - auto increment plugin version

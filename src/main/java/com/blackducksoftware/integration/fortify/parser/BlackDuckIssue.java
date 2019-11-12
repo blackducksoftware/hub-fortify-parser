@@ -123,6 +123,18 @@ public class BlackDuckIssue {
     @Parsed(field = "Scan date")
     private String scanDate;
 
+    @Parsed(field = "Upgrade Version")
+    private String upgradeVersion;
+
+    @Parsed(field = "Upgrade Version Released On")
+    private String upgradeVersionReleasedOn;
+
+    @Parsed(field = "Latest Version")
+    private String latestVersion;
+
+    @Parsed(field = "Latest Version Released On")
+    private String latestVersionReleasedOn;
+
     /**
      * Returns the unique ID of this particular issue.
      * Using an internal id plus the supplied name via the setId()
@@ -132,7 +144,7 @@ public class BlackDuckIssue {
      */
     public String getId() {
         if (issueId == null) {
-            String uuidData = String.format("%s:%s:%s:%s", BlackDuckUtils.cleanName(componentName), BlackDuckUtils.cleanName(version),
+            final String uuidData = String.format("%s:%s:%s:%s", BlackDuckUtils.cleanName(componentName), BlackDuckUtils.cleanName(version),
                     BlackDuckUtils.cleanName(channelVersionOriginId), vulnerabilityId);
             issueId = UUID.nameUUIDFromBytes(uuidData.getBytes()).toString();
             LOG.debug("Component name~" + BlackDuckUtils.cleanName(componentName) + "version~" + BlackDuckUtils.cleanName(version)
@@ -146,7 +158,7 @@ public class BlackDuckIssue {
         return projectName;
     }
 
-    public void setProjectName(String projectName) {
+    public void setProjectName(final String projectName) {
         this.projectName = projectName;
     }
 
@@ -154,7 +166,7 @@ public class BlackDuckIssue {
         return projectVersion;
     }
 
-    public void setProjectVersion(String projectVersion) {
+    public void setProjectVersion(final String projectVersion) {
         this.projectVersion = projectVersion;
     }
 
@@ -162,7 +174,7 @@ public class BlackDuckIssue {
         return projectId;
     }
 
-    public void setProjectId(String projectId) {
+    public void setProjectId(final String projectId) {
         this.projectId = projectId;
     }
 
@@ -170,7 +182,7 @@ public class BlackDuckIssue {
         return versionId;
     }
 
-    public void setVersionId(String versionId) {
+    public void setVersionId(final String versionId) {
         this.versionId = versionId;
     }
 
@@ -178,7 +190,7 @@ public class BlackDuckIssue {
         return channelVersionId;
     }
 
-    public void setChannelVersionId(String channelVersionId) {
+    public void setChannelVersionId(final String channelVersionId) {
         this.channelVersionId = channelVersionId;
     }
 
@@ -186,7 +198,7 @@ public class BlackDuckIssue {
         return componentName;
     }
 
-    public void setComponentName(String componentName) {
+    public void setComponentName(final String componentName) {
         this.componentName = componentName;
     }
 
@@ -194,7 +206,7 @@ public class BlackDuckIssue {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(final String version) {
         this.version = version;
     }
 
@@ -202,7 +214,7 @@ public class BlackDuckIssue {
         return channelVersionOrigin;
     }
 
-    public void setChannelVersionOrigin(String channelVersionOrigin) {
+    public void setChannelVersionOrigin(final String channelVersionOrigin) {
         this.channelVersionOrigin = channelVersionOrigin;
     }
 
@@ -210,7 +222,7 @@ public class BlackDuckIssue {
         return channelVersionOriginId;
     }
 
-    public void setChannelVersionOriginId(String channelVersionOriginId) {
+    public void setChannelVersionOriginId(final String channelVersionOriginId) {
         this.channelVersionOriginId = channelVersionOriginId;
     }
 
@@ -218,7 +230,7 @@ public class BlackDuckIssue {
         return channelVersionOriginName;
     }
 
-    public void setChannelVersionOriginName(String channelVersionOriginName) {
+    public void setChannelVersionOriginName(final String channelVersionOriginName) {
         this.channelVersionOriginName = channelVersionOriginName;
     }
 
@@ -226,7 +238,7 @@ public class BlackDuckIssue {
         return vulnerabilityId;
     }
 
-    public void setVulnerabilityId(String vulnerabilityId) {
+    public void setVulnerabilityId(final String vulnerabilityId) {
         this.vulnerabilityId = vulnerabilityId;
     }
 
@@ -234,7 +246,7 @@ public class BlackDuckIssue {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -242,7 +254,7 @@ public class BlackDuckIssue {
         return publishedOn;
     }
 
-    public void setPublishedOn(String publishedOn) {
+    public void setPublishedOn(final String publishedOn) {
         this.publishedOn = publishedOn;
     }
 
@@ -250,7 +262,7 @@ public class BlackDuckIssue {
         return updatedOn;
     }
 
-    public void setUpdatedOn(String updatedOn) {
+    public void setUpdatedOn(final String updatedOn) {
         this.updatedOn = updatedOn;
     }
 
@@ -258,7 +270,7 @@ public class BlackDuckIssue {
         return baseScore;
     }
 
-    public void setBaseScore(BigDecimal baseScore) {
+    public void setBaseScore(final BigDecimal baseScore) {
         this.baseScore = baseScore;
     }
 
@@ -266,7 +278,7 @@ public class BlackDuckIssue {
         return exploitability;
     }
 
-    public void setExploitability(BigDecimal exploitability) {
+    public void setExploitability(final BigDecimal exploitability) {
         this.exploitability = exploitability;
     }
 
@@ -274,7 +286,7 @@ public class BlackDuckIssue {
         return impact;
     }
 
-    public void setImpact(BigDecimal impact) {
+    public void setImpact(final BigDecimal impact) {
         this.impact = impact;
     }
 
@@ -282,7 +294,7 @@ public class BlackDuckIssue {
         return vulnerabilitySource;
     }
 
-    public void setVulnerabilitySource(String vulnerabilitySource) {
+    public void setVulnerabilitySource(final String vulnerabilitySource) {
         this.vulnerabilitySource = vulnerabilitySource;
     }
 
@@ -290,7 +302,7 @@ public class BlackDuckIssue {
         return hubVulnerabilityUrl;
     }
 
-    public void setHubVulnerabilityUrl(String hubVulnerabilityUrl) {
+    public void setHubVulnerabilityUrl(final String hubVulnerabilityUrl) {
         this.hubVulnerabilityUrl = hubVulnerabilityUrl;
     }
 
@@ -298,7 +310,7 @@ public class BlackDuckIssue {
         return remediationStatus;
     }
 
-    public void setRemediationStatus(String remediationStatus) {
+    public void setRemediationStatus(final String remediationStatus) {
         this.remediationStatus = remediationStatus;
     }
 
@@ -306,7 +318,7 @@ public class BlackDuckIssue {
         return remediationTargetDate;
     }
 
-    public void setRemediationTargetDate(String remediationTargetDate) {
+    public void setRemediationTargetDate(final String remediationTargetDate) {
         this.remediationTargetDate = remediationTargetDate;
     }
 
@@ -314,7 +326,7 @@ public class BlackDuckIssue {
         return remediationActualDate;
     }
 
-    public void setRemediationActualDate(String remediationActualDate) {
+    public void setRemediationActualDate(final String remediationActualDate) {
         this.remediationActualDate = remediationActualDate;
     }
 
@@ -322,7 +334,7 @@ public class BlackDuckIssue {
         return remediationComment;
     }
 
-    public void setRemediationComment(String remediationComment) {
+    public void setRemediationComment(final String remediationComment) {
         this.remediationComment = remediationComment;
     }
 
@@ -330,7 +342,7 @@ public class BlackDuckIssue {
         return URL;
     }
 
-    public void setURL(String uRL) {
+    public void setURL(final String uRL) {
         URL = uRL;
     }
 
@@ -338,7 +350,7 @@ public class BlackDuckIssue {
         return severity;
     }
 
-    public void setSeverity(String severity) {
+    public void setSeverity(final String severity) {
         this.severity = severity;
     }
 
@@ -346,8 +358,40 @@ public class BlackDuckIssue {
         return scanDate;
     }
 
-    public void setScanDate(String scanDate) {
+    public void setScanDate(final String scanDate) {
         this.scanDate = scanDate;
+    }
+
+    public String getUpgradeVersion() {
+        return upgradeVersion;
+    }
+
+    public void setUpgradeVersion(final String upgradeVersion) {
+        this.upgradeVersion = upgradeVersion;
+    }
+
+    public String getUpgradeVersionReleasedOn() {
+        return upgradeVersionReleasedOn;
+    }
+
+    public void setUpgradeVersionReleasedOn(final String upgradeVersionReleasedOn) {
+        this.upgradeVersionReleasedOn = upgradeVersionReleasedOn;
+    }
+
+    public String getLatestVersion() {
+        return latestVersion;
+    }
+
+    public void setLatestVersion(final String latestVersion) {
+        this.latestVersion = latestVersion;
+    }
+
+    public String getLatestVersionReleasedOn() {
+        return latestVersionReleasedOn;
+    }
+
+    public void setLatestVersionReleasedOn(final String latestVersionReleasedOn) {
+        this.latestVersionReleasedOn = latestVersionReleasedOn;
     }
 
 }

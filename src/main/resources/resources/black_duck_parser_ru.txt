@@ -22,3 +22,7 @@ url=URL
 componentName=Component name
 componentVersion=Component version
 hubVulnerabilityUrl=Hub Vulnerability URL
+upgradeVersion=Upgrade Version
+upgradeVersionReleasedOn=Upgrade Version Released On
+latestVersion=Latest Version
+latestVersionReleasedOn=Latest Version Released On
