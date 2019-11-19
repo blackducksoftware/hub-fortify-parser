@@ -21,19 +21,19 @@ public final class BlackDuckUtils {
     private BlackDuckUtils() {
     }
 
-    public static String cleanName(String name) {
-        return (name == null) ? null : name.replace(" ", "");
+    public static String cleanName(final String name) {
+        return name == null || "null".equalsIgnoreCase(name) ? null : name.replace(" ", "");
     }
 
     public static String getMD5ForStream(final InputStream is) throws IOException {
         try {
             return DigestUtils.md5Hex(is);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IOException("Unable to generate MD5 for stream!", e);
         }
     }
 
-    public static Date convertToDate(String strDateValue) {
+    public static Date convertToDate(final String strDateValue) {
         if (strDateValue == null) {
             return null;
         }
@@ -45,7 +45,7 @@ public final class BlackDuckUtils {
         try {
             final LocalDate localDate = LocalDate.parse(trimmedDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        } catch (Exception e) {
+        } catch (final Exception e) {
             LOG.error(
                     String.format("Date string %s cannot be parsed to date and value will be ignored. Please make sure date format is yyyy-MM-dd", trimmedDate),
                     e);
@@ -53,7 +53,7 @@ public final class BlackDuckUtils {
         }
     }
 
-    public static Date convertToDateTime(String strDateValue) {
+    public static Date convertToDateTime(final String strDateValue) {
         if (strDateValue == null) {
             return null;
         }
@@ -66,7 +66,7 @@ public final class BlackDuckUtils {
             final LocalDateTime localDateTime = LocalDateTime.parse(trimmedDate.substring(1, trimmedDate.length() - 1),
                     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
             return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-        } catch (Exception e) {
+        } catch (final Exception e) {
             LOG.error(
                     String.format("Date string %s cannot be parsed to date and value will be ignored. Please make sure date format is yyyy-MM-dd HH:mm:ss.SSS",
                             trimmedDate),
