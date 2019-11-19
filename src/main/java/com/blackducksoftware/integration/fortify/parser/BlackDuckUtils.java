@@ -22,7 +22,7 @@ public final class BlackDuckUtils {
     }
 
     public static String cleanName(final String name) {
-        return name == null || "null".equalsIgnoreCase(name) ? null : name.replace(" ", "");
+        return name == null ? null : name.replace(" ", "");
     }
 
     public static String getMD5ForStream(final InputStream is) throws IOException {
