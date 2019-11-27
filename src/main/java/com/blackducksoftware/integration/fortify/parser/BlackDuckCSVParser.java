@@ -54,7 +54,7 @@ public class BlackDuckCSVParser {
      * @throws IOException
      *             in case any errors
      */
-    public BlackDuckScan parseScan(InputStream inputStream) throws IOException {
+    public BlackDuckScan parseScan(final InputStream inputStream) throws IOException {
         /*
          * Some notes from Fortify developers:
          * This method is kind of useless for now since BlackDuck CSV result file does not contain any information about
@@ -102,14 +102,14 @@ public class BlackDuckCSVParser {
                     counter++;
                     continue;
                 } else {
-                    String[] lineArr = sCurrentLine.split(",");
-                    LOG.debug("Scan date from File::" + lineArr[lineArr.length - 1]);
-                    scanDate = BlackDuckUtils.convertToDateTime(lineArr[lineArr.length - 1]);
+                    final String[] lineArr = sCurrentLine.split(",");
+                    LOG.debug("Scan date from File::" + lineArr[lineArr.length - 5]);
+                    scanDate = BlackDuckUtils.convertToDateTime(lineArr[lineArr.length - 5]);
                     LOG.debug("Scan date::" + scanDate);
                     break;
                 }
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
             LOG.error(e.getMessage(), e);
             throw new IOException("Error while parsing the scan date");
