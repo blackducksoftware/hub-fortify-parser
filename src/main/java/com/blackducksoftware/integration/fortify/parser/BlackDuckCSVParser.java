@@ -59,8 +59,8 @@ public class BlackDuckCSVParser {
          * Some notes from Fortify developers:
          * This method is kind of useless for now since BlackDuck CSV result file does not contain any information about
          * scan itself and this method basically does nothing except setting some hard coded values.
-         * So, this method should be reimplemented somehow and to make it provided initialized scan object.
-         * We were informed that BlackDuc hub supports another export format (JSON). If JASON file contains any
+         * So, this method should be re-implemented somehow and to make it provided initialized scan object.
+         * We were informed that BlackDuck hub supports another export format (JSON). If JASON file contains any
          * information
          * about scan, it should be better to re-implement the parsing logic and move from CSV parsing to JSON fiel
          * parsing.
@@ -78,7 +78,7 @@ public class BlackDuckCSVParser {
         /*
          * FIX ME!
          * You must place some logic here that generates a scan date. This is very important thing since SSC uses this
-         * date to check if results located inside this field where uploaded before ir not. It will help SSC to prevent
+         * date to check if results located inside this field where uploaded before it not. It will help SSC to prevent
          * processing of the same files twice.
          * All parser plugins that SSC currently supports store the scan date inside the scan result file. You will need
          * to
@@ -114,7 +114,7 @@ public class BlackDuckCSVParser {
             LOG.error(e.getMessage(), e);
             throw new IOException("Error while parsing the scan date");
         }
-        blackDuckScan.setScanDate(scanDate != null ? scanDate : new Date());
+        blackDuckScan.setScanDate(new Date());
         blackDuckScan.setGuid(BlackDuckUtils.getMD5ForStream(inputStream));
         blackDuckScan.setScanLabel(BlackDuckConstants.SCAN_LABEL);
         return blackDuckScan;

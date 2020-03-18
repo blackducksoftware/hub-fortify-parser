@@ -86,7 +86,7 @@ public class BlackDuckCSVParserTest {
         InputStream secondFileStream = null;
         try {
             firstFileStream = new FileInputStream(simpleCsvFile);
-            String firstFilemd5string = getMD5ForStream(firstFileStream);
+            final String firstFilemd5string = getMD5ForStream(firstFileStream);
             Assert.assertNotNull(firstFilemd5string);
 
             secondFileStream = new FileInputStream(junkFile);
@@ -101,21 +101,21 @@ public class BlackDuckCSVParserTest {
 
             Assert.assertEquals(firstFilemd5string, secondFilemd5string);
 
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Assert.fail(e.getMessage());
         } finally {
             try {
                 if (firstFileStream != null) {
                     firstFileStream.close();
                 }
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 // noop
             }
             try {
                 if (secondFileStream != null) {
                     secondFileStream.close();
                 }
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 // noop
             }
         }
@@ -124,19 +124,19 @@ public class BlackDuckCSVParserTest {
     @Test
     public void testFileIntegrity() {
         try {
-            InputStream junkStream = new FileInputStream(junkFile);
+            final InputStream junkStream = new FileInputStream(junkFile);
             try {
-                BlackDuckCSVParser parser = new BlackDuckCSVParser();
+                final BlackDuckCSVParser parser = new BlackDuckCSVParser();
                 parser.parseIssues(junkStream, new BlackDuckBeanProcessor() {
                     @Override
-                    public void beanProcessed(BlackDuckIssue bean, ParsingContext context) {
+                    public void beanProcessed(final BlackDuckIssue bean, final ParsingContext context) {
                         // we do not really care about the results here.
                     }
                 });
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 Assert.assertEquals(BlackDuckConstants.BLACKDUCK_INVALID_CSV, e.getMessage());
             }
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             Assert.fail(e.getMessage());
         }
 
@@ -146,23 +146,23 @@ public class BlackDuckCSVParserTest {
     public void testBasicCSVFile() {
         try {
             final InputStream targetStream = new FileInputStream(simpleCsvFile);
-            BlackDuckCSVParser blackDuckParser = new BlackDuckCSVParser();
+            final BlackDuckCSVParser blackDuckParser = new BlackDuckCSVParser();
             blackDuckParser.parseIssues(targetStream, new BlackDuckBeanProcessor() {
 
                 int rowsProcessed = 0;
 
                 @Override
-                public void beanProcessed(BlackDuckIssue bean, ParsingContext context) {
+                public void beanProcessed(final BlackDuckIssue bean, final ParsingContext context) {
                     rowsProcessed++;
                 }
 
                 @Override
-                public void processEnded(ParsingContext context) {
+                public void processEnded(final ParsingContext context) {
                     super.processEnded(context);
                     Assert.assertEquals(11, rowsProcessed);
                 }
             });
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Assert.fail(e.getMessage());
         }
     }
@@ -173,24 +173,26 @@ public class BlackDuckCSVParserTest {
     @Test
     public void testComplexCSVFile() {
         try {
-            InputStream targetStream = new FileInputStream(complexCsvFile);
-            BlackDuckCSVParser blackDuckParser = new BlackDuckCSVParser();
+            final InputStream targetStream = new FileInputStream(complexCsvFile);
+            final BlackDuckCSVParser blackDuckParser = new BlackDuckCSVParser();
             blackDuckParser.parseIssues(targetStream, new BlackDuckBeanProcessor() {
                 int rowsProcessed = 0;
 
                 @Override
-                public void beanProcessed(BlackDuckIssue bean, ParsingContext context) {
+                public void beanProcessed(final BlackDuckIssue bean, final ParsingContext context) {
                     rowsProcessed++;
+                    System.out.println("rowProcessed::" + rowsProcessed);
                 }
 
                 @Override
-                public void processEnded(ParsingContext context) {
+                public void processEnded(final ParsingContext context) {
                     super.processEnded(context);
                     // Test for correct rows
+                    System.out.println("rowProcessed::" + rowsProcessed);
                     Assert.assertEquals(41, rowsProcessed);
                 }
             });
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Assert.fail(e.getMessage());
         }
     }
