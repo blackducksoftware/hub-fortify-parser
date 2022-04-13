@@ -33,7 +33,10 @@ public class BlackDuckConstants {
 
     public static final String SCAN_LABEL = "Black Duck Hub Vulnerability Import";
 
-    public static final String BLACKDUCK_ENGINE_TYPE = "BLACKDUCK_ENGINE_TYPE";
+    /**
+     * Issue engine type. Must match engine-type in plugin.xml.
+     */
+    public static final String BLACKDUCK_ENGINE_TYPE = "BLACKDUCK";
 
     public static final String ISSUE_CATEGORY = "3rd Party Component";
 
